@@ -31,10 +31,4 @@ public class User {
         this.name = name;
         this.email = email;
     }
-
-    @Override
-    public String toString() {
-        return "Name: " +
-               name + ", email: " + email;
-    }
 }
