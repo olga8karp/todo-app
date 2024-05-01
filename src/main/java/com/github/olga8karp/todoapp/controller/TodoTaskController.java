@@ -18,23 +18,23 @@ public class TodoTaskController {
     private final TodoTaskService todoTaskService;
 
     @GetMapping("/tasks")
-    public List<TodoTask> findAllTodoTasks() {
-        return todoTaskService.findAll();
+    public ResponseEntity<List<TodoTask>> findAllTodoTasks() {
+        return ResponseEntity.ok(todoTaskService.findAll());
     }
 
     @GetMapping("/tasks/getById")
-    public TodoTask getTodoTaskById(@RequestParam int id) {
-        return todoTaskService.findTaskById(id);
+    public ResponseEntity<TodoTask> getTodoTaskById(@RequestParam int id) {
+        return ResponseEntity.ok(todoTaskService.findTaskById(id));
     }
 
     @GetMapping("/tasks/getByTitle")
-    public TodoTask getTodoTaskByTitle(@RequestParam String title) {
-        return todoTaskService.findTodoTaskByTitle(title);
+    public ResponseEntity<TodoTask> getTodoTaskByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(todoTaskService.findTodoTaskByTitle(title));
     }
 
     @GetMapping("/tasks/getByUser")
-    public TodoTask getTodoTaskByUser(@RequestParam int userId, @RequestParam(required=false) Status status) {
-        return todoTaskService.findTodoTaskByUserAndStatus(userId, status);
+    public ResponseEntity<TodoTask> getTodoTaskByUser(@RequestParam int userId, @RequestParam(required=false) Status status) {
+        return ResponseEntity.ok(todoTaskService.findTodoTaskByUserAndStatus(userId, status));
     }
 
     @PostMapping("/tasks/create")
