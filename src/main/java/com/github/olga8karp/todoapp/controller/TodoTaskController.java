@@ -32,8 +32,8 @@ public class TodoTaskController {
         return ResponseEntity.ok(todoTaskService.findTodoTaskByTitle(title));
     }
 
-    @GetMapping("/tasks/getByUser")
-    public ResponseEntity<TodoTask> getTodoTaskByUser(@RequestParam int userId, @RequestParam(required=false) Status status) {
+    @GetMapping("/tasks/getByUserAndStatus")
+    public ResponseEntity<TodoTask> getTodoTaskByUserAndStatus(@RequestParam int userId, @RequestParam(required=false) Status status) {
         return ResponseEntity.ok(todoTaskService.findTodoTaskByUserAndStatus(userId, status));
     }
 
