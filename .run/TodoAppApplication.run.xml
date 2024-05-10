@@ -1,7 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="TodoAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="ACTIVE_PROFILES" value="local" />
     <module name="todo-app" />
+    <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.olga8karp.todoapp.TodoAppApplication" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
