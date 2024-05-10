@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: todo-app
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-main.xml
