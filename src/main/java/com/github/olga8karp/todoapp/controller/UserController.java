@@ -18,8 +18,10 @@ public class UserController {
 
     @PostMapping("/users/create")
     public ResponseEntity<?> createUser(@RequestParam("name") String name,
-                                        @RequestParam("email") String email){
-        return ResponseEntity.ok(userService.createUser(name, email).toString());
+                                        @RequestParam("email") String email,
+                                        @RequestParam("email") String userName,
+                                        @RequestParam("password") String password){
+        return ResponseEntity.ok(userService.createUser(name, email, userName, password).toString());
     }
 
     @GetMapping("/users/getById")

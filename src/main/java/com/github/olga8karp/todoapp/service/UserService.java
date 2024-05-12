@@ -10,8 +10,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser(String name, String email){
-        return userRepository.save(new User(name, email));
+    public User createUser(String name, String email, String password, String userName){
+        return userRepository.save(new User(name, email, password, userName));
     }
 
     public User updateUser(User user){
@@ -20,5 +20,9 @@ public class UserService {
 
     public User getUserById(int id){
         return userRepository.findById(id).orElse(null);
+    }
+
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 }
