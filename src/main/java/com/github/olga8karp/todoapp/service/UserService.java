@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User createUser(String name, String email, String password, String userName){
         return userRepository.save(new User(name, email, password, userName));
