@@ -1,5 +1,6 @@
 package com.github.olga8karp.todoapp.service;
 
+import com.github.olga8karp.todoapp.entity.Project;
 import com.github.olga8karp.todoapp.exception.ProjectNotFoundException;
 import com.github.olga8karp.todoapp.repository.ProjectRepository;
 import org.junit.jupiter.api.Test;
@@ -8,10 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.Comparator;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -103,6 +110,41 @@ class ProjectServiceTest {
 
         // Assert
         assertEquals(10, found.size());
+    }
+
+    @Test
+    @Sql("insert-10-projects.sql")
+    void findAll_shouldReturnProjectsFromSpecificPage() {
+        // Arrange
+
+        // Act
+        var found = projectService.findAll(PageRequest.of(1, 2));
+
+        // Assert
+        assertAll(
+                () -> assertEquals(10, found.getTotalElements()),
+                () -> assertEquals(5, found.getTotalPages()),
+                () -> assertEquals(2, found.getContent().size()),
+                () -> assertEquals(1003L, found.getContent().getFirst().getId())
+        );
+    }
+
+    @Test
+    @Sql("insert-10-projects.sql")
+    void findAll_shouldReturnProjectsInSortedOrder() {
+        // Arrange
+
+        // Act
+        var found = projectService.findAll(PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "name")));
+
+        // Assert
+        assertAll(
+                () -> assertEquals(10, found.getTotalElements()),
+                () -> assertEquals(1, found.getTotalPages()),
+                () -> assertEquals(10, found.getContent().size()),
+                () -> assertEquals(1010L, found.getContent().getFirst().getId()),
+                () -> assertThat(found.getContent()).isSortedAccordingTo(Comparator.comparing(Project::getName))
+        );
     }
 
     @TestConfiguration(proxyBeanMethods = false)

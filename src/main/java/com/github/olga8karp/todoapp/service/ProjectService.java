@@ -3,6 +3,8 @@ package com.github.olga8karp.todoapp.service;
 import com.github.olga8karp.todoapp.entity.Project;
 import com.github.olga8karp.todoapp.exception.ProjectNotFoundException;
 import com.github.olga8karp.todoapp.repository.ProjectRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +48,10 @@ public class ProjectService {
 
     public List<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    public Page<Project> findAll(Pageable pageable) {
+        return projectRepository.findAll(pageable);
     }
 
 }
