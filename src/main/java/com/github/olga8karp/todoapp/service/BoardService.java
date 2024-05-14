@@ -1,7 +1,9 @@
 package com.github.olga8karp.todoapp.service;
 
 import com.github.olga8karp.todoapp.entity.Board;
+import com.github.olga8karp.todoapp.entity.Project;
 import com.github.olga8karp.todoapp.repository.BoardRepository;
+import com.github.olga8karp.todoapp.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,16 +12,24 @@ import java.util.List;
 @Service
 @Transactional
 public class BoardService {
+
     private final BoardRepository boardRepository;
 
-    public BoardService(BoardRepository boardRepository) {
+    private final ProjectRepository projectRepository;
+
+    public BoardService(BoardRepository boardRepository, ProjectRepository projectRepository) {
         this.boardRepository = boardRepository;
+        this.projectRepository = projectRepository;
     }
 
-    public Board create(String name, String description) {
+    public Board create(Long projectId, String name, String description) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project with id " + projectId + " not found"));
+
         Board toCreate = new Board();
         toCreate.setName(name);
         toCreate.setDescription(description);
+        toCreate.setProject(project);
         return boardRepository.save(toCreate);
     }
 

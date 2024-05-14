@@ -1,6 +1,7 @@
 package com.github.olga8karp.todoapp.controller;
 
 import com.github.olga8karp.todoapp.exception.BoardNotFoundException;
+import com.github.olga8karp.todoapp.exception.ProjectNotFoundException;
 import com.github.olga8karp.todoapp.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ class BoardControllerTest {
     void createValidBoard_shouldReturn_status201() throws Exception {
         // Arrange
         var request = post("/boards")
+                .param("projectId", "1")
                 .param("name", "Test Board")
                 .param("description", "Test Description")
                 .with(csrf());
@@ -42,6 +44,43 @@ class BoardControllerTest {
 
         // Assert
         response.andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockUser("admin")
+    void createBoard_withoutProjectId_shouldReturn_status400() throws Exception {
+        // Arrange
+        var request = post("/boards")
+                .param("projectId", (String) null)
+                .param("name", "Test Name")
+                .param("description", "Test Description")
+                .with(csrf());
+
+        // Act
+        var response = mockMvc.perform(request);
+
+        // Assert
+        response.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser("admin")
+    void createBoard_withNonExistentProjectId_shouldReturn_status400() throws Exception {
+        // Arrange
+        doThrow(new IllegalArgumentException("Project with id 0 not found"))
+                .when(boardService).create(eq(0L), anyString(), anyString());
+
+        var request = post("/boards")
+                .param("projectId", "0")
+                .param("name", "Test Name")
+                .param("description", "Test Description")
+                .with(csrf());
+
+        // Act
+        var response = mockMvc.perform(request);
+
+        // Assert
+        response.andExpect(status().isBadRequest());
     }
 
     @Test

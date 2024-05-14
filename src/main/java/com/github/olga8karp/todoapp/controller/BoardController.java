@@ -22,10 +22,11 @@ public class BoardController {
 
     @PostMapping(path = "/boards")
     public ResponseEntity<Board> createBoard(
+            @RequestParam(value = "projectId") Long projectId,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "description") String description
     ) {
-        Board created = this.boardService.create(name, description);
+        Board created = this.boardService.create(projectId, name, description);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
