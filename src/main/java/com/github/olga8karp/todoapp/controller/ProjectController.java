@@ -3,6 +3,7 @@ package com.github.olga8karp.todoapp.controller;
 import com.github.olga8karp.todoapp.entity.Project;
 import com.github.olga8karp.todoapp.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class ProjectController {
             @RequestParam(value = "description") String description
     ) {
         Project created = this.projectService.create(name, description);
-        return ResponseEntity.ok(created);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping(path = "/projects/{id}")
