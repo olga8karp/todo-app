@@ -1,6 +1,7 @@
 package com.github.olga8karp.todoapp.service;
 
 import com.github.olga8karp.todoapp.entity.Project;
+import com.github.olga8karp.todoapp.exception.ProjectNotFoundException;
 import com.github.olga8karp.todoapp.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,12 +33,15 @@ public class ProjectService {
     }
 
     public void delete(Long id) {
+        if (!projectRepository.existsById(id)) {
+            throw new ProjectNotFoundException(id);
+        }
         projectRepository.deleteById(id);
     }
 
     public Project findOne(Long id) {
         return projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found: " + id));
+                .orElseThrow(() -> new ProjectNotFoundException(id));
     }
 
     public List<Project> findAll() {

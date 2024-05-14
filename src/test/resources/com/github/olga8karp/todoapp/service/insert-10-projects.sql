@@ -1,0 +1,10 @@
+insert into project (id, name, description) values (1001, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1002, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1003, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1004, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1005, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1006, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1007, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1008, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1009, 'Test Name', 'Test Description');
+insert into project (id, name, description) values (1010, 'Test Name', 'Test Description');
